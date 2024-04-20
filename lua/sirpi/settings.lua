@@ -17,10 +17,12 @@ o.signcolumn = 'yes'
 o.foldmethod = 'expr'
 o.foldexpr = 'nvim_treesitter#foldexpr()'
 o.filetype = 'on'
-
 o.ignorecase = true
+--o.list = true
+--o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,eol:\\u2937,"
+--o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,"
 
-cmd('colorscheme onedark_dark')
+cmd('colorscheme gruvbox')
 
 
 

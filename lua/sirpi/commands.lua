@@ -75,8 +75,8 @@ end
 
 function ColorSchemePreview()
     builtin = require('telescope.builtin')
-    opts = { enable_preview = true }
-    builtin.colorscheme(opts)
+    themes = require 'telescope.themes'
+    builtin.colorscheme(themes.get_ivy { enable_preview = true })
 end
 
 function Run()
@@ -115,4 +115,22 @@ function TidyRestart()
     else
         print "Not a go project"
     end
+end
+
+function MoveCursor()
+    text = vim.fn.input("Move:")
+    direction = string.sub(text, 1, 1)
+    if tonumber(direction) ~= nil then
+        steps = string.sub(text, 1)
+    else
+        steps = string.sub(text, 2)
+    end
+
+    if direction == 'u' then
+        steps = "-" .. steps
+    elseif direction == 'd' then
+        steps = "+" .. steps
+    end
+    command = string.format(":%s", steps)
+    vim.fn.execute(command)
 end
