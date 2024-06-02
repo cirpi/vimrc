@@ -17,12 +17,12 @@ end
 -- Format on-save plugin configs
 function FormatAndSave()
     vim.lsp.buf.format()
-    vim.api.nvim_command('write')
-    if vim.bo.filetype == 'go' then
-        cmd = string.format('silent !goimports -w %s', GetCurrentFile())
-        vim.api.nvim_command(cmd)
-    end
-    return
+    -- vim.api.nvim_command('write')
+    -- if vim.bo.filetype == 'go' then
+    --     cmd = string.format('silent !goimports -w %s', GetCurrentFile())
+    --     vim.api.nvim_command(cmd)
+    -- end
+    vim.cmd("write")
 end
 
 function GetCurrentFile()
@@ -126,11 +126,43 @@ function MoveCursor()
         steps = string.sub(text, 2)
     end
 
-    if direction == 'u' then
+    if direction == '-' then
         steps = "-" .. steps
-    elseif direction == 'd' then
+    elseif direction == '+' then
         steps = "+" .. steps
     end
     command = string.format(":%s", steps)
     vim.fn.execute(command)
+end
+
+function ToggleWrap()
+    if vim.o.wrap then
+        vim.o.wrap = false
+    else
+        vim.o.wrap = true
+    end
+end
+
+function ChangeCurrentDirectory()
+    path = vim.fn.expand("%:h")
+    if not isTerm(path) then
+        cmd = string.format('silent cd %s', path)
+        vim.cmd(cmd)
+    end
+end
+
+function Makefile()
+    local file = io.open("makefile", "r")
+    if file == nil then
+        file = io.open("Makefile", "r")
+        if file ~= nil then
+            io.close(file)
+            vim.cmd("make")
+        else
+            print "no makefile"
+        end
+    else
+        io.close(file)
+        vim.cmd("make")
+    end
 end

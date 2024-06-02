@@ -17,13 +17,22 @@ map("n", "<C-l>", "<C-w>l")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 
--- go mot tidy (Go specific)
+map('n', '<leader>y', ':lua vim.lsp.buf.format()<CR>')
+
+-- go mod tidy (Go specific)
 map("n", "<C-t>", ":lua TidyRestart()<CR>")
+
+-- Execute make command
+map('n', '<leader>m', ':lua Makefile()<CR>')
+
+-- Toggle wrap
+map('n', '<C-w>', ':lua ToggleWrap()<CR>')
 
 -- close the current buffer
 map('n', '<C-q>', ':bd!<CR>')
 -- close instance
-map('n', '<C-i>', ':qa<CR>')
+-- Ctrl+i is equl to Tab, whenever i press Tab in 'n' mode, it quits the instance
+-- map('n', '<C-i>', ':qa<CR>')
 -- open the recently opened buffer
 map('n', '<C-p>', ':b#<CR>')
 
@@ -66,7 +75,9 @@ local builtin = require('telescope.builtin')
 local themes = require "telescope.themes"
 -- Find the files in the current working directory
 vim.keymap.set('n', '<leader>ff', function()
-    builtin.find_files(themes.get_ivy())
+    path = vim.fn.getcwd()
+    print(path)
+    builtin.find_files(themes.get_ivy({ cwd = path }))
 end)
 -- grep for the current file/buffer
 vim.keymap.set('n', '<leader>gr', function()
@@ -96,6 +107,7 @@ map('n', '<leader>gs', ':G<CR>')
 
 -- Cursor movement (Ex: u20 move the cursor 20 lines up, d20 move 20 lines down, 20 move the 20th line)
 map('n', 'M', ':lua MoveCursor()<CR>')
+
 
 -- ColorSchemePreview
 vim.api.nvim_create_user_command('Preview', ':lua ColorSchemePreview()<CR>', {})

@@ -31,6 +31,11 @@ return require('packer').startup(function(use)
     use 'AlexvZyl/nordic.nvim'
     use 'loctvl842/monokai-pro.nvim'
     use 'olimorris/onedarkpro.nvim'
+    use {
+        'mcchrish/zenbones.nvim',
+        requires = "rktjmp/lush.nvim"
+    }
+    use 'savq/melange'
 
     -- Eabsy motion
     -- use 'easymotion/vim-easymotion'
@@ -53,9 +58,14 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    use 'nvim-treesitter/nvim-treesitter'
-    --run = ':TSUpdate'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ":TSUpdate",
+    }
     use 'nvim-treesitter/playground'
+    -- use 'nvim-treesitter/nvim-treesitter'
+    --run = ':TSUpdate'
+    -- use 'nvim-treesitter/playground'
     use 'tpope/vim-fugitive'
     use {
         'VonHeikemen/lsp-zero.nvim',

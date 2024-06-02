@@ -3,11 +3,11 @@ local cmd = vim.cmd
 local g = vim.g
 
 
-
 o.number = true
 o.relativenumber = true
 o.expandtab = true
 o.termguicolors = true
+o.guifont = "IosevkaTerm Nerd Font:h15"
 o.wrap = false
 o.tabstop = 4
 o.shiftwidth = 4
@@ -18,11 +18,11 @@ o.foldmethod = 'expr'
 o.foldexpr = 'nvim_treesitter#foldexpr()'
 o.filetype = 'on'
 o.ignorecase = true
---o.list = true
+o.list = true
 --o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,eol:\\u2937,"
---o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,"
+o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,eol:\\u2937"
 
-cmd('colorscheme gruvbox')
+cmd('colorscheme everforest')
 
 
 
