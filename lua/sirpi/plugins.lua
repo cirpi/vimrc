@@ -13,6 +13,7 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
+
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -37,7 +38,7 @@ return require('packer').startup(function(use)
     }
     use 'savq/melange'
 
-    -- Eabsy motion
+    -- Easy motion
     -- use 'easymotion/vim-easymotion'
 
     use {
@@ -60,7 +61,6 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = ":TSUpdate",
     }
     use 'nvim-treesitter/playground'
     -- use 'nvim-treesitter/nvim-treesitter'
@@ -69,26 +69,26 @@ return require('packer').startup(function(use)
     use 'tpope/vim-fugitive'
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        requires = {
-            --- Uncomment these if you want to manage LSP servers from neovim
-            -- {'williamboman/mason.nvim'},
-            -- {'williamboman/mason-lspconfig.nvim'},
+        branch = 'v4.x', requires = {
+        -- Uncomment these if you want to manage LSP servers from neovim
+        -- { 'williamboman/mason.nvim' },
+        -- { 'williamboman/mason-lspconfig.nvim' },
 
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-        }
+        -- LSP Support
+        { 'neovim/nvim-lspconfig' },
+        -- Autocompletion
+        { 'hrsh7th/nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp' },
+        { 'L3MON4D3/LuaSnip' },
+    }
     }
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
-    use 'neovim/nvim-lspconfig'
+    -- use 'neovim/nvim-lspconfig'
 
     -- Live server
     use 'barrett-ruth/live-server.nvim'
+
     -- File tree
     use 'nvim-tree/nvim-tree.lua'
     use 'nvim-tree/nvim-web-devicons'

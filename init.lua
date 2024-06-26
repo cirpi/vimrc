@@ -1,12 +1,14 @@
-require('sirpi.settings')
 require('sirpi.keybindings')
 require('sirpi.plugins')
 require('sirpi.colors')
+require('sirpi.autocmds')
 require('sirpi.commands')
+require('sirpi.settings')
 
 require('Comment').setup()
 require('live-server').setup {
     args = {}
+
 }
 local lsp = require('lsp-zero')
 lsp.extend_lspconfig()
@@ -18,8 +20,9 @@ lsp.extend_lspconfig()
 local nvim_lsp = require 'lspconfig'
 nvim_lsp.gopls.setup {
     on_attach = function(client, bufnr)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true })
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>R', '<cmd>lua vim.lsp.buf.references()<CR>',
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>',
+            { noremap = true })
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>r', '<cmd>lua vim.lsp.buf.references()<CR>',
             { noremap = true })
     end,
     settings = {
@@ -46,22 +49,43 @@ nvim_lsp.jdtls.setup {
     single_file_support = true
 }
 nvim_lsp.lua_ls.setup {}
+nvim_lsp.lemminx.setup {}
 
 
 
 --vim.g.go_fmt_commad = 'goimports'
 --vim.g.go_fmt_autosave = true
 -- lualine customization
+function CurrMode()
+    local mode_map = {
+        n = "Normal",
+        i = "Insert",
+        v = "Visual",
+        V = "Visual Line",
+        ['\x16'] = "Visual Block",
+        c = "Command",
+        R = "Replace",
+        Rv = "Virtual Replace",
+        s = "Select",
+        S = "Select Line",
+        ["\x13"] = "Select Block",
+        nt = "Terminal",
+    }
+    local curr_mode = vim.api.nvim_get_mode().mode
+    local mode = mode_map[curr_mode]
+    return mode
+end
+
 require('lualine').setup {
     options = {
         icons_enabled = true,
         theme = 'auto',
         -- section_separators = { left = '', right = '' },
         -- component_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
+        -- component_separators = { left = '', right = '' },
         disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -76,20 +100,20 @@ require('lualine').setup {
         }
     },
     sections = {
-        lualine_a = { 'mode' },
+        lualine_a = { CurrMode },
         lualine_b = { 'branch', 'diff' },
         --lualine_b = { 'buffers' },
         lualine_c = { 'filetype' },
-        lualine_x = { 'diagnostics' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
+        lualine_x = { 'location' },
+        lualine_y = { 'diagnostics' },
+        lualine_z = { 'progress' }
     },
     tabline = {
         lualine_a = { 'buffers' },
         lualine_b = {},
         lualine_c = {},
         lualine_x = {},
-        lualine_y = {},
+        lualine_y = { "searchcount" },
         lualine_z = { "%F" }
     },
     inactive_sections = {
@@ -118,7 +142,7 @@ require('autoclose').setup({})
 require('mason-lspconfig').setup({
     -- Replace the language servers listed here
     -- with the ones you want to install
-    ensure_installed = { 'gopls', 'lua_ls', 'cssls', 'pyright', 'marksman', 'ansiblels', 'bashls', 'clangd', 'dockerls', 'yamlls' },
+    ensure_installed = { 'gopls', 'lua_ls' },
     handlers = {
         lsp.default_setup,
     }
@@ -134,7 +158,7 @@ require('mason-lspconfig').setup({
 
 
 local cmp = require 'cmp'
-local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
+local cmp_select_opts = { behavior = cmp.SelectBehavior }
 
 cmp.setup({
     sources = {
@@ -142,7 +166,6 @@ cmp.setup({
     },
     mapping = {
         ['<tab>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-e>'] = cmp.mapping.abort(),
         ['<C-u>'] = cmp.mapping.scroll_docs(-5),
         ['<C-d>'] = cmp.mapping.scroll_docs(5),
         ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
@@ -258,3 +281,24 @@ require("nvim-tree").setup({
         dotfiles = true,
     },
 })
+
+
+
+
+-- local client = vim.lsp.start_client {
+--     name = "sirpi's lsp",
+--     cmd = { "/home/sirpi/projects/go/edu_lsp/edu_lsp" },
+-- }
+--
+-- if not client then
+--     print "client not started"
+--     return
+-- end
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "go",
+--     callback = function()
+--         vim.lsp.buf_attach_client(0, client)
+--     end
+-- })
+--

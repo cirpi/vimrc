@@ -18,12 +18,15 @@ map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 
 map('n', '<leader>y', ':lua vim.lsp.buf.format()<CR>')
+-- map('n', '<C-c>', ':lua vim.lsp.buf.implementation()<CR>')
+map('n', '<C-c>', ':lua vim.lsp.buf.references()<CR>')
 
 -- go mod tidy (Go specific)
 map("n", "<C-t>", ":lua TidyRestart()<CR>")
 
 -- Execute make command
-map('n', '<leader>m', ':lua Makefile()<CR>')
+map('n', 'mm', ':lua Makefile()<CR>')
+map('n', 'mr', ':make run<CR>')
 
 -- Toggle wrap
 map('n', '<C-w>', ':lua ToggleWrap()<CR>')
@@ -77,27 +80,27 @@ local themes = require "telescope.themes"
 vim.keymap.set('n', '<leader>ff', function()
     path = vim.fn.getcwd()
     print(path)
-    builtin.find_files(themes.get_ivy({ cwd = path }))
+    builtin.find_files(themes.get_dropdown({ cwd = path }))
 end)
 -- grep for the current file/buffer
 vim.keymap.set('n', '<leader>gr', function()
     -- builtin.live_grep({ prompt_title = 'find string: ', grep_open_files = true })
-    builtin.live_grep(themes.get_ivy({ prompt_title = 'Find', grep_open_files = true }))
+    builtin.live_grep(themes.get_dropdown({ prompt_title = 'Find', grep_open_files = true }))
     -- builtin.live_grep({ prompt_title = 'find string: ', grep_open_files = true })
 end)
 -- Find the vim help tags
 vim.keymap.set('n', '<leader>cc', function()
-    builtin.help_tags(themes.get_ivy())
+    builtin.help_tags(themes.get_dropdown())
 end)
 
 -- Find the currently active buffers
 vim.keymap.set('n', '<leader>bb', function()
-    builtin.buffers(themes.get_ivy())
+    builtin.buffers(themes.get_dropdown())
 end)
 
 -- Find the diagnostics for the current buffer
 vim.keymap.set('n', '<leader>j', function()
-    builtin.diagnostics(themes.get_ivy({ bufnr = 0 }))
+    builtin.diagnostics(themes.get_dropdown({ bufnr = 0 }))
 end)
 
 -- Git status (Fugitive plugin)
@@ -107,10 +110,13 @@ map('n', '<leader>gs', ':G<CR>')
 
 -- Cursor movement (Ex: u20 move the cursor 20 lines up, d20 move 20 lines down, 20 move the 20th line)
 map('n', 'M', ':lua MoveCursor()<CR>')
+map('v', 'M', '<cmd>lua MoveCursor()<CR>')
+
+map('t', '<Esc>', '<C-\\><C-n>')
 
 
 -- ColorSchemePreview
-vim.api.nvim_create_user_command('Preview', ':lua ColorSchemePreview()<CR>', {})
+vim.api.nvim_create_user_command('Preview', ":lua ColorSchemePreview()<cr>", {})
 
 -- Live server keybindings
 vim.api.nvim_create_user_command('Ls', 'LiveServerToggle', {})

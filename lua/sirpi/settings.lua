@@ -7,40 +7,35 @@ o.number = true
 o.relativenumber = true
 o.expandtab = true
 o.termguicolors = true
-o.guifont = "IosevkaTerm Nerd Font:h15"
 o.wrap = false
 o.tabstop = 4
 o.shiftwidth = 4
 o.backup = false
 o.writebackup = false
 o.signcolumn = 'yes'
-o.foldmethod = 'expr'
-o.foldexpr = 'nvim_treesitter#foldexpr()'
+-- o.foldmethod = 'expr'
+-- o.foldexpr = 'nvim_treesitter#foldexpr()'
+o.foldmethod = 'syntax'
 o.filetype = 'on'
 o.ignorecase = true
 o.list = true
 --o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,eol:\\u2937,"
 o.listchars = "space:\\u2022,tab:\\u21dc\\u2053\\u21dd,eol:\\u2937"
 
-cmd('colorscheme everforest')
+cmd('colorscheme carbonfox')
 
 
 
 -- make nvim and os clipboard play nicely with each other
 o.clipboard = 'unnamedplus'
+o.undodir = '/home/sirpi/vim_undo'
 o.undofile = true
+
 
 -- remember 30 items in cmd history
 o.history = 30
 
-o.shell = '/usr/bin/bash'
-
-g.ocaml_revised = 1
-g.ocaml_noend_error = 1
-
-
-
-
+o.shell = '/usr/bin/fish'
 
 
 -- Number of screen lines to keep at the top and bottom of the cursor

@@ -76,7 +76,7 @@ end
 function ColorSchemePreview()
     builtin = require('telescope.builtin')
     themes = require 'telescope.themes'
-    builtin.colorscheme(themes.get_ivy { enable_preview = true })
+    builtin.colorscheme(themes.get_dropdown { enable_preview = true })
 end
 
 function Run()
